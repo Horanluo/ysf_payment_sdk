@@ -32,7 +32,7 @@ public class TranController {
 		ExternalQrcodeVO qrcodeVO = new ExternalQrcodeVO();
 		qrcodeVO.setMerchno("200440348120003");
 		qrcodeVO.setGoodsName("安致兰德");
-		qrcodeVO.setTraceno("20180112155855");
+		qrcodeVO.setTraceno("20180112155856");
 		qrcodeVO.setAmount(new BigDecimal(1).setScale(2).doubleValue());
 		qrcodeVO.setCallbackUrl("");
 		qrcodeVO.setNotifyUrl("");
