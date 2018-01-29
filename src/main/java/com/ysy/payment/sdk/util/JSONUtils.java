@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -21,7 +22,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.xiaoleilu.hutool.util.StrUtil;
 
 /**
  * JSON转换常用类
@@ -129,7 +129,7 @@ public class JSONUtils
      */
     public static String strToJson(String livingType,String livingPhotoUrl,String videoType,String videoUrl,String jsonStr){
     	Map<String, String> map = new HashMap<String, String>();;
-    	if(!StrUtil.isEmpty(jsonStr)){
+    	if(!StringUtils.isEmpty(jsonStr)){
     		map = JSONObject.parseObject(jsonStr,Map.class);  
     	}
     	map.put(livingType, livingPhotoUrl);

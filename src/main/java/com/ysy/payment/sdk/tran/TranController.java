@@ -21,7 +21,7 @@ public class TranController {
 	private String query_url="http://120.24.13.203:9001/services/pay/gateway/api/queryTran";
 	
 	//加签密钥
-	private String merchKey = "B1E2D8C8E0A8901065B6AD1B7D2C7329";
+	private String merchKey = "83763B6487FB8E910A5BB1ADAB2732D6";
 	
 	/**
 	 * 发起订单交易
@@ -30,7 +30,7 @@ public class TranController {
 	 */
 	public String backTransRequest() throws Exception{
 		ExternalQrcodeVO qrcodeVO = new ExternalQrcodeVO();
-		qrcodeVO.setMerchno("200541100000461");
+		qrcodeVO.setMerchno("200440348120003");
 		qrcodeVO.setGoodsName("安致兰德");
 		qrcodeVO.setTraceno("20180112155855");
 		qrcodeVO.setAmount(new BigDecimal(1).setScale(2).doubleValue());
