@@ -69,6 +69,8 @@ public class ExternalQrcodeVO
      */
     private String callbackUrl;
 
+    private String openid;
+    
 	public String getMerchno() {
 		return merchno;
 	}
@@ -147,5 +149,13 @@ public class ExternalQrcodeVO
 
 	public void setCallbackUrl(String callbackUrl) {
 		this.callbackUrl = callbackUrl;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 }

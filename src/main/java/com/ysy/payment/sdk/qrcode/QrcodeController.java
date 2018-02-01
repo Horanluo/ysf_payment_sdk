@@ -1,18 +1,22 @@
-package com.ysy.payment.sdk.tran;
+package com.ysy.payment.sdk.qrcode;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.ysy.payment.sdk.dto.ExternalQrcodeVO;
 import com.ysy.payment.sdk.util.HttpsClientUtil;
 import com.ysy.payment.sdk.util.JSONUtils;
 import com.ysy.payment.sdk.util.ReflectUtils;
 import com.ysy.payment.sdk.util.SignUtil;
 
-public class TranController {
+public class QrcodeController {
 
-	static Logger log = LoggerFactory.getLogger(TranController.class);
+	static Logger log = LoggerFactory.getLogger(QrcodeController.class);
 	
 	//下单url
 	private String tran_url="http://120.24.13.203:9001/services/pay/gateway/api/backTransReq";
@@ -53,6 +57,31 @@ public class TranController {
 		return result;
 	}
 	
+	/**
+	 * 发起小程序支付订单交易
+	 * @return
+	 * @throws Exception 
+	 */
+	public String miniTransRequest() throws Exception{
+		ExternalQrcodeVO qrcodeVO = new ExternalQrcodeVO();
+		qrcodeVO.setMerchno("200440357220002");
+		qrcodeVO.setTraceno("TL"+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+		qrcodeVO.setAmount(new BigDecimal(1).setScale(2).doubleValue());
+		qrcodeVO.setOpenid("ohgYk0Zxx_BXJGYAgLCP79xGYgCc");
+		qrcodeVO.setPayType(2);
+		
+		Map<String, String> param = ReflectUtils.convertToMaps(qrcodeVO);
+		String sign = SignUtil.genSign("410502F860CCAC24A971771CB9B1CD27", SignUtil.createLinkString(SignUtil.paraFilter(param)));
+		qrcodeVO.setSign(sign);
+		
+		String postStr = (String)JSONUtils.obj2json(qrcodeVO);
+		log.info("请求参数:{}",postStr);
+		
+		String result = HttpsClientUtil.sendRequest(tran_url, postStr, "application/json");
+		log.info("响应结果:{}",result);
+		
+		return result;
+	}
 	
 	/**
 	 * 发起查询订单交易
@@ -78,7 +107,7 @@ public class TranController {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		new TranController().backTransRequest();
+		new QrcodeController().miniTransRequest();
 		//new TranController().queryTransRequest();
 	}
 }
