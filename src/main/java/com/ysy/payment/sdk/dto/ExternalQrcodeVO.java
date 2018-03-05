@@ -71,6 +71,16 @@ public class ExternalQrcodeVO
 
     private String openid;
     
+    private String refundReason;
+    
+	public String getRefundReason() {
+		return refundReason;
+	}
+
+	public void setRefundReason(String refundReason) {
+		this.refundReason = refundReason;
+	}
+
 	public String getMerchno() {
 		return merchno;
 	}
@@ -157,5 +167,13 @@ public class ExternalQrcodeVO
 
 	public void setOpenid(String openid) {
 		this.openid = openid;
+	}
+
+	@Override
+	public String toString() {
+		return "ExternalQrcodeVO [merchno=" + merchno + ", traceno=" + traceno + ", amount=" + amount + ", payType="
+				+ payType + ", notifyUrl=" + notifyUrl + ", goodsName=" + goodsName + ", channel=" + channel
+				+ ", attach=" + attach + ", sign=" + sign + ", callbackUrl=" + callbackUrl + ", openid=" + openid
+				+ ", refundReason=" + refundReason + "]";
 	}
 }

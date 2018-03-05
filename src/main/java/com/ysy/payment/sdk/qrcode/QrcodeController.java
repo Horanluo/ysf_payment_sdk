@@ -18,11 +18,18 @@ public class QrcodeController {
 
 	static Logger log = LoggerFactory.getLogger(QrcodeController.class);
 	
-	//下单url
+	//下单url  线上地址
 	private String tran_url="http://120.24.13.203:9001/services/pay/gateway/api/backTransReq";
+	//测试地址
+	//private String tran_url="http://192.168.0.101:8082/gateway/api/backTransReq";
 	
-	//查询订单url
+	//查询订单url   线上地址
 	private String query_url="http://120.24.13.203:9001/services/pay/gateway/api/queryTran";
+	//测试地址
+	//private String query_url="http://192.168.0.101:8082/gateway/api/queryTran";
+	
+	//退款url  测试地址
+	private String refund_url="http://cp.esyto.com:9000/gateway/api/refundTransReq";
 	
 	//加签密钥
 	private String merchKey = "83763B6487FB8E910A5BB1ADAB2732D6";
@@ -36,7 +43,7 @@ public class QrcodeController {
 		ExternalQrcodeVO qrcodeVO = new ExternalQrcodeVO();
 		qrcodeVO.setMerchno("200440348120003");
 		qrcodeVO.setGoodsName("安致兰德");
-		qrcodeVO.setTraceno("20180112155856");
+		qrcodeVO.setTraceno("tuikuan20180112155860");
 		qrcodeVO.setAmount(new BigDecimal(1).setScale(2).doubleValue());
 		qrcodeVO.setCallbackUrl("");
 		qrcodeVO.setNotifyUrl("");
@@ -90,11 +97,11 @@ public class QrcodeController {
 	 */
 	public String queryTransRequest() throws Exception{
 		ExternalQrcodeVO qrcodeVO = new ExternalQrcodeVO();
-		qrcodeVO.setMerchno("200541100000461");
-		qrcodeVO.setTraceno("20180112155854");
+		qrcodeVO.setMerchno("200440348120003");
+		qrcodeVO.setTraceno("tuikuan20180112155859");
 		
 		Map<String, String> param = ReflectUtils.convertToMaps(qrcodeVO);
-		String sign = SignUtil.genSign(merchKey, SignUtil.createLinkString(SignUtil.paraFilter(param)));
+		String sign = SignUtil.genSign("83763B6487FB8E910A5BB1ADAB2732D6", SignUtil.createLinkString(SignUtil.paraFilter(param)));
 		qrcodeVO.setSign(sign);
 		
 		String postStr = (String)JSONUtils.obj2json(qrcodeVO);
@@ -106,8 +113,37 @@ public class QrcodeController {
 		return result;
 	}
 	
+	/**
+	 * 发起扫码--退款交易
+	 * @return
+	 * @throws Exception 
+	 */
+	public String refundTransRequest() throws Exception{
+		ExternalQrcodeVO qrcodeVO = new ExternalQrcodeVO();
+		qrcodeVO.setMerchno("200440348120003");
+		qrcodeVO.setRefundReason("");
+		qrcodeVO.setTraceno("tuikuan20180112155860");
+		qrcodeVO.setAmount(new BigDecimal(1).setScale(0).doubleValue());
+		qrcodeVO.setPayType(2);
+		
+		Map<String, String> param = ReflectUtils.convertToMaps(qrcodeVO);
+		String sign = SignUtil.genSign(merchKey, SignUtil.createLinkString(SignUtil.paraFilter(param)));
+		qrcodeVO.setSign(sign);
+		
+		System.out.println(qrcodeVO);
+		String postStr = (String)JSONUtils.obj2json(qrcodeVO);
+		log.info("请求参数:{}",postStr);
+		//HttpsClientUtil.sendRequest(tran_url, postStr, "application/json");
+		
+		String result = HttpsClientUtil.sendRequest(refund_url, postStr, "application/json");
+		log.info("响应结果:{}",result);
+		
+		return result;
+	}
+	
 	public static void main(String[] args) throws Exception {
-		new QrcodeController().miniTransRequest();
-		//new TranController().queryTransRequest();
+		//new QrcodeController().backTransRequest();
+		//new QrcodeController().queryTransRequest();
+		new QrcodeController().refundTransRequest();
 	}
 }
