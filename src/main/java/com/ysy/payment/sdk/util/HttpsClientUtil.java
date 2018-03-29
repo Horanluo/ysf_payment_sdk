@@ -38,6 +38,7 @@ import org.apache.http.util.EntityUtils;
 /**
  * 
  * 鍟嗘埛鍙弬鑰冩湰绫荤紪鍐欏彂閫佽姹傛柟娉曪紝涔熷彲鐩存帴浣跨敤鏈被
+ * 商户可参考本类编写发送请求方法，也可直接使用本类
  *
  */
 
@@ -49,6 +50,7 @@ public class HttpsClientUtil {
         ConnectionSocketFactory plainSF = new PlainConnectionSocketFactory();
         registryBuilder.register("http", plainSF);
         //鎸囧畾淇′换瀵嗛挜瀛樺偍瀵硅薄鍜岃繛鎺ュ鎺ュ瓧宸ュ巶
+        //指定信任密钥存储对象和连接套接字工厂
         try {
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
             SSLContext sslContext = SSLContexts.custom().useTLS().loadTrustMaterial(trustStore, new AnyTrustStrategy()).build();
@@ -68,20 +70,20 @@ public class HttpsClientUtil {
         PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(registry);
         connManager.setDefaultConnectionConfig(connConfig);
         connManager.setDefaultSocketConfig(socketConfig);
-        //鎸囧畾cookie瀛樺偍瀵硅薄
+        //指定cookie存储对象
         BasicCookieStore cookieStore = new BasicCookieStore();
         return HttpClientBuilder.create().setDefaultCookieStore(cookieStore).setConnectionManager(connManager).build();
     }
-
 	
     /**
      * 鍙戦�乯son鏍煎紡璇锋眰鍒版寚瀹氬湴鍧�
+     * 发送json格式请求到指定地址
      * @param url
      * @param json
      * @return
      */
     public static String sendRequest(String url, String json,String contentType) {
-        int timeout=5000;                                     //瓒呮椂鏃堕棿
+        int timeout=5000;                                     //超时时间
         String strResult = "";
         HttpResponse resp = null;
         HttpEntity entity = null;
@@ -105,11 +107,12 @@ public class HttpsClientUtil {
 
     /**
      * https 涓嶉獙璇佽瘉涔�
+     * https 不验证证书
      * @param httpClient
      */
     public static void wrapClient(HttpClient httpClient) {
         try {
-            X509TrustManager xtm = new X509TrustManager() {   //鍒涘缓TrustManager
+            X509TrustManager xtm = new X509TrustManager() {   //创建TrustManager
                 public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
                 }
                 public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
@@ -118,22 +121,20 @@ public class HttpsClientUtil {
                     return null;
                 }
             };
-            //TLS1.0涓嶴SL3.0鍩烘湰涓婃病鏈夊お澶х殑宸埆锛屽彲绮楃暐鐞嗚В涓篢LS鏄疭SL鐨勭户鎵胯�咃紝浣嗗畠浠娇鐢ㄧ殑鏄浉鍚岀殑SSLContext
+            //TLS1.0与SSL3.0基本上没有太大的差别，可粗略理解为TLS是SSL的继承者，但它们使用的是相同的SSLContext
             SSLContext ctx = SSLContext.getInstance("TLS");
-            //浣跨敤TrustManager鏉ュ垵濮嬪寲璇ヤ笂涓嬫枃锛孴rustManager鍙槸琚玈SL鐨凷ocket鎵�浣跨敤
+            //使用TrustManager来初始化该上下文，TrustManager只是被SSL的Socket所使用
             ctx.init(null, new TrustManager[]{xtm}, null);
-            //鍒涘缓SSLSocketFactory
+            //创建SSLSocketFactory
             SSLSocketFactory socketFactory = new SSLSocketFactory(ctx);
-            //閫氳繃SchemeRegistry灏哠SLSocketFactory娉ㄥ唽鍒版垜浠殑HttpClient涓�
+            //通过SchemeRegistry将SSLSocketFactory注册到我们的HttpClient上
             httpClient.getConnectionManager().getSchemeRegistry().register(new Scheme("https", 443, socketFactory));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-
     private static class AnyTrustStrategy implements TrustStrategy {
-
         public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
             return true;
         }

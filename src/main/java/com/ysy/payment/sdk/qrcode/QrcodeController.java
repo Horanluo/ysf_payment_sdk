@@ -45,6 +45,7 @@ public class QrcodeController {
 		qrcodeVO.setMerchno("200440348120003");
 		qrcodeVO.setGoodsName("安致兰德");
 		qrcodeVO.setTraceno("AZLD"+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+		qrcodeVO.setTraceno("tuikuan20180112155860");
 		qrcodeVO.setAmount(new BigDecimal(1).setScale(2).doubleValue());
 		qrcodeVO.setCallbackUrl("");
 		qrcodeVO.setNotifyUrl("");
