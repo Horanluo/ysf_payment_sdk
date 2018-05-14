@@ -26,29 +26,54 @@ public class SingleProxyQuery {
 
 	private static final String TF_DOG_SK = "dog_sk";
 
-	private static final String single_proxy_queryurl = "http://cp.esyto.com:9000/gateway/api/singleProxyQueryReq";
+	private static final String single_proxy_queryurl = "http://cp.esyto.com:9001/gateway/api/backTransReq";
+	
+	//private static final String single_proxy_queryurl = "http://192.168.0.54:9001/gateway/api/backTransReq";
 	
 	private static final String merchKey = "B2FFAB14EC5B6EB35BE6AFA1C1A11486";
 	
 	static Logger log = LoggerFactory.getLogger(SingleProxyQuery.class);
 	
 	public static void main(String[] args) throws Exception {
-
+		//new SingleProxyQuery().singleProxy();
+		new SingleProxyQuery().queryBalance();
+	}
+	
+	//余额查询
+	public void queryBalance() throws Exception {
 		ProxyDTO singleDto = new ProxyDTO();
 		singleDto.setMerchno("200541100000470");
-		singleDto.setBusinessnumber("BNwnf-trans-953882466286829004");
+		singleDto.setTranType("04");
 		
 		Map<String, String> param = ReflectUtils.convertToMaps(singleDto);
 		String sign = SignUtil.genSign(merchKey, SignUtil.createLinkString(SignUtil.paraFilter(param)));
 		singleDto.setSign(sign);
 		
 		String postStr = (String)JSONUtils.obj2json(singleDto);
-		log.info("请求参数:{}",postStr);
+		log.info("查询请求参数:{}",postStr);
 		
 		String result = HttpsClientUtil.sendRequest(single_proxy_queryurl, postStr, "application/json");
-		log.info("响应结果:{}",result);
+		log.info("查询返回结果:{}",result);
 	}
-
+	
+	//代付结果查询
+	public void singleProxy() throws Exception {
+		ProxyDTO singleDto = new ProxyDTO();
+		singleDto.setMerchno("200541100000470");
+		singleDto.setBusinessnumber("DF-20180514103911");
+		singleDto.setTranType("03");
+		
+		Map<String, String> param = ReflectUtils.convertToMaps(singleDto);
+		String sign = SignUtil.genSign(merchKey, SignUtil.createLinkString(SignUtil.paraFilter(param)));
+		singleDto.setSign(sign);
+		
+		String postStr = (String)JSONUtils.obj2json(singleDto);
+		log.info("查询请求参数:{}",postStr);
+		
+		String result = HttpsClientUtil.sendRequest(single_proxy_queryurl, postStr, "application/json");
+		log.info("查询返回结果:{}",result);
+	}
+		
 	/**
 	 * 签名字符串
 	 * 
@@ -178,6 +203,4 @@ public class SingleProxyQuery {
 			return false;
 		}
 	}
-	
-	 
 }

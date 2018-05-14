@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springside.modules.security.utils.Digests;
 import org.springside.modules.utils.Encodes;
 
+import com.ysy.payment.sdk.dto.RegistVO;
 import com.ysy.payment.sdk.test.SignVO;
 import com.ysy.payment.sdk.util.JSONUtils;
 import com.ysy.payment.sdk.util.ReflectUtils;
@@ -26,38 +27,75 @@ public class Sign {
 	
 	public static void main(String[] args) throws Exception {
 		//文档支付费用接口加签
-		SignVO signVO = new SignVO();
-		signVO.setAddresIp("127.0.0.1");
-		signVO.setVersion("1.0.0");
-		signVO.setDeviceId("355311080070412");
-		signVO.setDeviceType("iphone");
-		signVO.setLongitude("113.950723");
-		signVO.setLatitude("22.558888");
-		signVO.setMerchno("200440154110014");
-		signVO.setPayAmt("54.75");
-		signVO.setBankCode("CGB");
-		signVO.setPayCardNo("1234567891234567");
-		signVO.setRepayCreditCardNo("1234567891234567");
-		signVO.setPayCardName("***");
-		signVO.setPayBankName("广发银行");
-		signVO.setValiDate("0123");
-		signVO.setSecurCode("456");
-		signVO.setPhone("12345678912");
-		signVO.setRepayStartDate("2018-03-27");
-		signVO.setRepayEndDate("2018-03-28");
-		signVO.setRepayAmt("10000");
-		signVO.setMarginAmt("3000");
-		signVO.setServiceFee("81");
-		signVO.setPhaseNum(6);
-		signVO.setMarginRatio("30");
+//		RegistVO regist = new RegistVO();
+//		regist.setVersion("1.2");
+//		regist.setAgentno("4403010001");
+//		regist.setFullName("Moyq5");
+//		regist.setMerchName("护城河");
+//		regist.setLegalName("莫勇强");
+//		regist.setIdentityCard("450881198812287118");
+//		regist.setMobile("15012918802");
+//		regist.setProvince("广东省");
+//		regist.setCity("深圳市");
+//		regist.setAreaName("南山区");
+//		regist.setAddress("科技园");
+//		regist.setAreaCode("220303");
+//		regist.setEmail("mo_yq5@163.com");
+//		regist.setAccountName("莫勇强");
+//		regist.setAccountno("6226097559749198");
+//		regist.setAccountType("1");
+//		regist.setBankName("招商银行深圳分行莲花支行");
+//		regist.setBankno("308584001725");
+//		regist.setPayFeeD0("2.00");
+//		regist.setPayFeeT1("2.00");
+//		regist.setQuickPayD0Rate(new BigDecimal(0.0047));
+//		regist.setQuickPayT1Rate(new BigDecimal(0.0047));
+//		signVO.setPayAmt("54.75");
+//		signVO.setBankCode("CGB");
+//		signVO.setPayCardNo("1234567891234567");
+//		signVO.setRepayCreditCardNo("1234567891234567");
+//		signVO.setPayCardName("***");
+//		signVO.setPayBankName("广发银行");
+//		signVO.setValiDate("0123");
+//		signVO.setSecurCode("456");
+//		signVO.setPhone("12345678912");
+//		signVO.setRepayStartDate("2018-03-27");
+//		signVO.setRepayEndDate("2018-03-28");
+//		signVO.setRepayAmt("10000");
+//		signVO.setMarginAmt("3000");
+//		signVO.setServiceFee("81");
+//		signVO.setPhaseNum(6);
+//		signVO.setMarginRatio("30");
 		
-		Map<String, String> param = convertToMaps(signVO);
+		SignVO vo = new SignVO();
+		vo.setAddresIp("test");
+		vo.setVersion("1.0");
+		vo.setDeviceId("android");
+		vo.setDeviceType("android");
+		vo.setLongitude("1");
+		vo.setLatitude("1");
+		vo.setMerchno("200541100000535");
+		vo.setPhoneNo("12345678911");
+		vo.setBillDay("06");
+		vo.setRepayDay("24");
+		vo.setSmsCode("1124");
+		vo.setVerifyCode("N2QyYWIwMDM5ZWQyMGMxMWViZTA4ZTIyOTI1MzBiOWR8MTUyMTc5NTcxODQ5Ng==");
+		vo.setCardName("曾云龙");
+		vo.setCardNo("123456789234568");
+		vo.setIdentityCard("123456789456");
+		//vo.setWithdrawAmt("2.00");
+		//vo.setKey("E471CD46A8C226667B9C30D043853A0D");
+		
+		Map<String, String> param = convertToMaps(vo);
 		System.out.println(param);
-		String sign = genSign("56CE8947ED3B5DDAEC608DD30DB31A19", createLinkString(paraFilter(param)));
+		String sign = genSign("E471CD46A8C226667B9C30D043853A0D", createLinkString(paraFilter(param)));
 		System.out.println(sign);
+		//56CE8947ED3B5DDAEC608DD30DB31A19
 	}
 	
 	public static String genSign(String key,String str){
+		System.out.println(str);
+		System.out.println(key);
 		return md5(str+"&key="+key).toUpperCase();
 	}
 	

@@ -1,21 +1,21 @@
 /*
- * 类文件名:  MerchDTO.java
- * 著作版权:  深圳市云智恒生科技有限公司 Copyright 2012-2022, E-mail: 283912449@qq.com, All rights reserved
- * 功能描述:  <描述>
- * 类创建人:  曾云龙
- * 创建时间:  2017年7月23日
- * 功能版本:  V001Z0001
+ * 绫绘枃浠跺悕:  MerchDTO.java
+ * 钁椾綔鐗堟潈:  娣卞湷甯備簯鏅烘亽鐢熺鎶�鏈夐檺鍏徃 Copyright 2012-2022, E-mail: 283912449@qq.com, All rights reserved
+ * 鍔熻兘鎻忚堪:  <鎻忚堪>
+ * 绫诲垱寤轰汉:  鏇句簯榫�
+ * 鍒涘缓鏃堕棿:  2017骞�7鏈�23鏃�
+ * 鍔熻兘鐗堟湰:  V001Z0001
  */
 package com.ysy.payment.sdk.dto;
 
 /**
- * 商户注册信息
+ * 鍟嗘埛娉ㄥ唽淇℃伅
  * 
  * @author   Horanluo
  * @version  V001Z0001
- * @date     2018年01月22日
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @date     2018骞�01鏈�22鏃�
+ * @see  [鐩稿叧绫�/鏂规硶]
+ * @since  [浜у搧/妯″潡鐗堟湰]
  */
 public class ProxyDTO
 {
@@ -41,7 +41,14 @@ public class ProxyDTO
 	private String batchamount;
 	private String paydate;
 	private String paydetail;
+	private String tranType;
 	
+	public String getTranType() {
+		return tranType;
+	}
+	public void setTranType(String tranType) {
+		this.tranType = tranType;
+	}
 	public String getDescription() {
 		return description;
 	}

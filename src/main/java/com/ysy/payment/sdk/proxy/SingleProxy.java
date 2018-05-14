@@ -3,7 +3,9 @@ package com.ysy.payment.sdk.proxy;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -33,7 +35,9 @@ public class SingleProxy {
 
 	private static final String merchKey = "B2FFAB14EC5B6EB35BE6AFA1C1A11486";
 	
-	private static final String single_proxy_url = "http://cp.esyto.com:9000/gateway/api/singleProxyReq";
+	//private static final String single_proxy_url = "http://cp.esyto.com:9001/gateway/api/singleProxyReq";
+	
+	private static final String single_proxy_url = "http://192.168.0.54:9001/gateway/api/backTransReq";
 	
 	static Logger log = LoggerFactory.getLogger(SingleProxy.class);
 	
@@ -41,11 +45,12 @@ public class SingleProxy {
 
 		ProxyDTO singleDto = new ProxyDTO();
 		singleDto.setMerchno("200541100000470");
-		singleDto.setBusinessnumber("BNwnf-trans-953882466286829004");
+		singleDto.setTranType("01");
+		singleDto.setBusinessnumber("DF-"+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 		singleDto.setSubject("单笔代付");
-		singleDto.setTransactionamount("0.01");
-		singleDto.setBankcardnumber("6214856555342173");
-		singleDto.setBankcardname("曾云龙");
+		singleDto.setTransactionamount("1");
+		singleDto.setBankcardnumber("6214837559410067");
+		singleDto.setBankcardname("罗根红");
 		singleDto.setBankname("招商银行");
 		singleDto.setBankcardtype("个人");
 		singleDto.setBankaccounttype("储蓄卡");
@@ -59,6 +64,9 @@ public class SingleProxy {
 		
 		String result = HttpsClientUtil.sendRequest(single_proxy_url, postStr, "application/json");
 		log.info("响应结果:{}",result);
+		
+//		String result = HttpsClientUtil.sendRequest(single_proxy_url, "BNwnf-trans-953882466286829004", "application/json");
+//		log.info("响应结果:{}",result);
 	}
 
 	/**

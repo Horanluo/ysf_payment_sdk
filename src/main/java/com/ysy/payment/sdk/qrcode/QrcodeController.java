@@ -20,9 +20,9 @@ public class QrcodeController {
 	static Logger log = LoggerFactory.getLogger(QrcodeController.class);
 	
 	//下单url  线上地址
-	private String tran_url="http://120.24.13.203:9001/services/pay/gateway/api/backTransReq";
+	//private String tran_url="http://120.24.13.203:9001/services/pay/gateway/api/backTransReq";
 	//测试地址
-	//private String tran_url="http://192.168.0.101:8082/gateway/api/backTransReq";
+	private String tran_url="http://120.24.98.96:9001/services/pay/gateway/api/backTransReq";
 	
 	//查询订单url   线上地址
 	private String query_url="http://120.24.13.203:9001/services/pay/gateway/api/queryTran";
@@ -45,7 +45,7 @@ public class QrcodeController {
 		qrcodeVO.setMerchno("200440348120003");
 		qrcodeVO.setGoodsName("安致兰德");
 		qrcodeVO.setTraceno("AZLD"+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
-		qrcodeVO.setTraceno("tuikuan20180112155860");
+		//qrcodeVO.setTraceno("tuikuan20180112155860");
 		qrcodeVO.setAmount(new BigDecimal(1).setScale(2).doubleValue());
 		qrcodeVO.setCallbackUrl("");
 		qrcodeVO.setNotifyUrl("");
@@ -144,37 +144,37 @@ public class QrcodeController {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		//new QrcodeController().backTransRequest();
+		new QrcodeController().backTransRequest();
 		//new QrcodeController().queryTransRequest();
 		//new QrcodeController().refundTransRequest();
-		SignVO signVO = new SignVO();
-		signVO.setAddresIp("127.0.0.1");
-		signVO.setVersion("1.0.0");
-		signVO.setDeviceId("355311080070412");
-		signVO.setDeviceType("iphone");
-		signVO.setLongitude("113.950723");
-		signVO.setLatitude("22.558888");
-		signVO.setMerchno("200440154110014");
-		signVO.setPayAmt("54.75");
-		signVO.setBankCode("CGB");
-		signVO.setPayCardNo("6258101649353374");
-		signVO.setRepayCreditCardNo("6258101649353374");
-		signVO.setPayCardName("曾云龙");
-		signVO.setPayBankName("广发银行");
-		signVO.setValiDate("1221");
-		signVO.setSecurCode("106");
-		signVO.setPhone("13510492707");
-		signVO.setRepayStartDate("2018-03-27");
-		signVO.setRepayEndDate("2018-03-28");
-		signVO.setRepayAmt("100");
-		signVO.setMarginAmt("50");
-		signVO.setServiceFee("4.75");
-		signVO.setPhaseNum(4);
-		signVO.setMarginRatio("50");
-		
-		Map<String, String> param = ReflectUtils.convertToMaps(signVO);
-		System.out.println(param);
-		String sign = SignUtil.genSign("56CE8947ED3B5DDAEC608DD30DB31A19", SignUtil.createLinkString(SignUtil.paraFilter(param)));
-		System.out.println(sign);
+//		SignVO signVO = new SignVO();
+//		signVO.setAddresIp("127.0.0.1");
+//		signVO.setVersion("1.0.0");
+//		signVO.setDeviceId("355311080070412");
+//		signVO.setDeviceType("iphone");
+//		signVO.setLongitude("113.950723");
+//		signVO.setLatitude("22.558888");
+//		signVO.setMerchno("200440154110014");
+//		signVO.setPayAmt("54.75");
+//		signVO.setBankCode("CGB");
+//		signVO.setPayCardNo("6258101649353374");
+//		signVO.setRepayCreditCardNo("6258101649353374");
+//		signVO.setPayCardName("曾云龙");
+//		signVO.setPayBankName("广发银行");
+//		signVO.setValiDate("1221");
+//		signVO.setSecurCode("106");
+//		signVO.setPhone("13510492707");
+//		signVO.setRepayStartDate("2018-03-27");
+//		signVO.setRepayEndDate("2018-03-28");
+//		signVO.setRepayAmt("100");
+//		signVO.setMarginAmt("50");
+//		signVO.setServiceFee("4.75");
+//		signVO.setPhaseNum(4);
+//		signVO.setMarginRatio("50");
+//		
+//		Map<String, String> param = ReflectUtils.convertToMaps(signVO);
+//		System.out.println(param);
+//		String sign = SignUtil.genSign("56CE8947ED3B5DDAEC608DD30DB31A19", SignUtil.createLinkString(SignUtil.paraFilter(param)));
+//		System.out.println(sign);
 	}
 }

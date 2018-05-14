@@ -156,6 +156,98 @@ public class SignVO{
      */
     private String marginRatio;
 
+    private Integer pageSize;
+    
+    private Integer pageNum;
+    
+    private String repayStatus;
+    
+    /**
+     * 提现开始时间
+     */
+    private String withdrawStartTime;
+    
+    /**
+     * 提现结束时间
+     */
+    private String withdrawEndTime;
+    
+    /**
+     * 提现状态
+     */
+    private String payStatus;
+    
+    /**
+     * 提现金额
+     */
+    private String withdrawAmt;
+    
+    private String key;
+    
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public String getWithdrawAmt() {
+		return withdrawAmt;
+	}
+
+	public void setWithdrawAmt(String withdrawAmt) {
+		this.withdrawAmt = withdrawAmt;
+	}
+
+	public String getWithdrawStartTime() {
+		return withdrawStartTime;
+	}
+
+	public void setWithdrawStartTime(String withdrawStartTime) {
+		this.withdrawStartTime = withdrawStartTime;
+	}
+
+	public String getWithdrawEndTime() {
+		return withdrawEndTime;
+	}
+
+	public void setWithdrawEndTime(String withdrawEndTime) {
+		this.withdrawEndTime = withdrawEndTime;
+	}
+
+	public String getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(String payStatus) {
+		this.payStatus = payStatus;
+	}
+
+	public String getRepayStatus() {
+		return repayStatus;
+	}
+
+	public void setRepayStatus(String repayStatus) {
+		this.repayStatus = repayStatus;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public Integer getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(Integer pageNum) {
+		this.pageNum = pageNum;
+	}
+
 	public String getAddresIp() {
 		return addresIp;
 	}
